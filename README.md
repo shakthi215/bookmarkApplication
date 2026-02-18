@@ -4,7 +4,7 @@ A modern, real-time bookmark manager built with Next.js and Supabase, featuring 
 
 ## 🌟 Live Demo
 
-**Deployed URL:** [\[Your Vercel URL Here\]](https://bookmark-application-hazel.vercel.app/)
+**Deployed URL:** (https://bookmark-application-hazel.vercel.app/)
 
 ## 📋 Project Overview
 
