@@ -37,34 +37,6 @@ This application allows users to save, manage, and organize their favorite web l
 ### Deployment
 - **Vercel** - Platform for hosting and continuous deployment
 
-## 📁 Project Structure
-
-```
-smart-bookmark-app/
-├── app/
-│   ├── auth/
-│   │   └── callback/
-│   │       └── route.js          # OAuth callback handler
-│   ├── login/
-│   │   └── page.js                # Login page with Google sign-in
-│   ├── page.js                    # Main dashboard (protected route)
-│   ├── layout.js                  # Root layout
-│   └── globals.css                # Global styles
-├── components/
-│   ├── AddBookmark.js             # Form to add new bookmarks
-│   ├── BookmarkList.js            # Display bookmarks with real-time updates
-│   ├── GoogleSignIn.js            # Google OAuth sign-in button
-│   └── SignOut.js                 # Sign-out button
-├── utils/
-│   └── supabase/
-│       ├── client.js              # Browser-side Supabase client
-│       └── server.js              # Server-side Supabase client
-├── middleware.js                  # Auth middleware for protected routes
-├── .env.local                     # Environment variables (not in repo)
-├── package.json                   # Dependencies and scripts
-└── README.md                      # Project documentation
-```
-
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -76,123 +48,6 @@ Before you begin, ensure you have the following installed:
 - A Supabase account
 - A Google Cloud account (for OAuth)
 - A Vercel account (for deployment)
-
-### Installation Steps
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/YOUR-USERNAME/smart-bookmark-app.git
-   cd smart-bookmark-app
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Set up environment variables**
-   
-   Create a `.env.local` file in the root directory:
-   ```env
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-   ```
-
-4. **Run the development server**
-   ```bash
-   npm run dev
-   ```
-
-5. **Open your browser**
-   
-   Navigate to `http://localhost:3000`
-
-## 🔧 Configuration
-
-### Supabase Setup
-
-1. **Create a Supabase Project**
-   - Sign up at [supabase.com](https://supabase.com)
-   - Create a new project
-   - Note your project URL and anon key
-
-2. **Database Schema**
-   
-   Run this SQL in the Supabase SQL Editor:
-   ```sql
-   -- Create bookmarks table
-   create table bookmarks (
-     id uuid default gen_random_uuid() primary key,
-     created_at timestamp with time zone default timezone('utc'::text, now()) not null,
-     user_id uuid references auth.users not null,
-     title text not null,
-     url text not null
-   );
-
-   -- Enable Row Level Security
-   alter table bookmarks enable row level security;
-
-   -- Create policies for user data privacy
-   create policy "Users can view own bookmarks"
-     on bookmarks for select
-     using (auth.uid() = user_id);
-
-   create policy "Users can insert own bookmarks"
-     on bookmarks for insert
-     with check (auth.uid() = user_id);
-
-   create policy "Users can delete own bookmarks"
-     on bookmarks for delete
-     using (auth.uid() = user_id);
-
-   -- Enable real-time updates
-   alter publication supabase_realtime add table bookmarks;
-   ```
-
-3. **Configure Google OAuth**
-   - Go to Authentication > Providers in Supabase
-   - Enable Google provider
-   - Add your Google OAuth credentials (Client ID and Secret)
-
-### Google Cloud Setup
-
-1. **Create OAuth Credentials**
-   - Go to [Google Cloud Console](https://console.cloud.google.com)
-   - Create a new project or select existing one
-   - Enable Google+ API
-   - Create OAuth 2.0 Client ID credentials
-   - Add authorized redirect URI: `https://[YOUR-PROJECT-REF].supabase.co/auth/v1/callback`
-
-2. **Configure OAuth Consent Screen**
-   - Set application name and contact information
-   - Add required scopes (email, profile)
-
-## 🌐 Deployment
-
-### Deploying to Vercel
-
-1. **Push to GitHub**
-   ```bash
-   git add .
-   git commit -m "Ready for deployment"
-   git push origin main
-   ```
-
-2. **Connect to Vercel**
-   - Go to [vercel.com](https://vercel.com)
-   - Import your GitHub repository
-   - Add environment variables:
-     - `NEXT_PUBLIC_SUPABASE_URL`
-     - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-
-3. **Deploy**
-   - Click "Deploy"
-   - Vercel will automatically build and deploy your app
-   - Your app will be live at `https://your-app.vercel.app`
-
-4. **Update Google OAuth**
-   - Add your Vercel URL to Google Cloud authorized redirect URIs
-   - Format: `https://[YOUR-PROJECT-REF].supabase.co/auth/v1/callback`
 
 ## 📱 Features in Detail
 
@@ -309,8 +164,8 @@ This project is created for educational purposes as part of a coding assignment.
 ## 👤 Author
 
 **Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Email: your.email@example.com
+- GitHub: [@shakthi215](https://github.com/shakthi215)
+- Email: shakthis045@gmail.com
 
 ## 🙏 Acknowledgments
 
