@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
 
-export default function AddBookmark({ userId }) {
+export default function AddBookmark({ userId, onBookmarkAdded }) {
   const [title, setTitle] = useState('')
   const [url, setUrl] = useState('')
   const [loading, setLoading] = useState(false)
@@ -40,19 +40,24 @@ export default function AddBookmark({ userId }) {
 
     setLoading(true)
 
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('bookmarks')
       .insert([
-        { 
-          user_id: userId, 
-          title: title.trim(), 
+        {
+          user_id: userId,
+          title: title.trim(),
           url: normalizedUrl
         }
       ])
+      .select('*')
+      .single()
 
     if (error) {
       setErrorMessage(error.message)
     } else {
+      if (data) {
+        onBookmarkAdded?.(data)
+      }
       setTitle('')
       setUrl('')
       setErrorMessage('')

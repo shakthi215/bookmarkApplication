@@ -1,8 +1,7 @@
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
-import BookmarkList from '@/components/BookmarkList'
-import AddBookmark from '@/components/AddBookmark'
 import SignOut from '@/components/SignOut'
+import BookmarksDashboard from '@/components/BookmarksDashboard'
 
 export default async function Home() {
   const supabase = await createClient()
@@ -42,23 +41,7 @@ export default async function Home() {
             <SignOut />
           </div>
 
-          <div className="mb-6 grid gap-3 sm:grid-cols-3">
-            <div className="rounded-2xl border border-slate-700/80 bg-slate-900/70 p-4">
-              <p className="text-xs uppercase tracking-[0.14em] text-slate-400">Bookmarks</p>
-              <p className="mt-1 text-2xl font-bold text-white">{bookmarks.length}</p>
-            </div>
-            <div className="rounded-2xl border border-slate-700/80 bg-slate-900/70 p-4">
-              <p className="text-xs uppercase tracking-[0.14em] text-slate-400">Visibility</p>
-              <p className="mt-1 text-lg font-semibold text-emerald-300">Private</p>
-            </div>
-            <div className="rounded-2xl border border-slate-700/80 bg-slate-900/70 p-4">
-              <p className="text-xs uppercase tracking-[0.14em] text-slate-400">Sync</p>
-              <p className="mt-1 text-lg font-semibold text-cyan-300">Realtime On</p>
-            </div>
-          </div>
-
-          <AddBookmark userId={user.id} />
-          <BookmarkList userId={user.id} initialBookmarks={bookmarks} />
+          <BookmarksDashboard userId={user.id} initialBookmarks={bookmarks} />
         </div>
       </div>
     </div>
