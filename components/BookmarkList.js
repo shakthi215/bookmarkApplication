@@ -7,6 +7,14 @@ export default function BookmarkList({ userId, initialBookmarks }) {
   const [bookmarks, setBookmarks] = useState(initialBookmarks ?? [])
   const supabase = createClient()
 
+  function getHost(url) {
+    try {
+      return new URL(url).host
+    } catch {
+      return url
+    }
+  }
+
   useEffect(() => {
     // Subscribe to realtime changes
     const channel = supabase
@@ -56,37 +64,40 @@ export default function BookmarkList({ userId, initialBookmarks }) {
 
   if (bookmarks.length === 0) {
     return (
-      <div className="text-center py-12 text-gray-500">
-        <p className="text-lg">No bookmarks yet!</p>
-        <p className="text-sm mt-2">Add your first bookmark above to get started.</p>
+      <div className="rounded-2xl border border-dashed border-slate-700 bg-slate-900/50 py-14 text-center text-slate-400">
+        <p className="text-lg font-semibold text-slate-300">No bookmarks yet</p>
+        <p className="mt-2 text-sm">Add your first link to start building your private library.</p>
       </div>
     )
   }
 
   return (
     <div className="space-y-3">
-      <h2 className="text-xl font-semibold text-gray-700 mb-4">
+      <h2 className="mb-4 text-lg font-semibold text-slate-200 sm:text-xl">
         Your Bookmarks ({bookmarks.length})
       </h2>
       {bookmarks.map((bookmark) => (
         <div
           key={bookmark.id}
-          className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+          className="group flex flex-col gap-3 rounded-2xl border border-slate-700/80 bg-slate-900/70 p-4 transition hover:border-cyan-400/40 hover:bg-slate-900 sm:flex-row sm:items-center sm:justify-between"
         >
-          <div className="flex-1 min-w-0">
-            <h3 className="font-medium text-gray-800 truncate">{bookmark.title}</h3>
+          <div className="min-w-0 flex-1">
+            <h3 className="truncate text-base font-semibold text-white">{bookmark.title}</h3>
+            <p className="mt-1 text-xs uppercase tracking-[0.14em] text-slate-500">
+              {getHost(bookmark.url)}
+            </p>
             <a
               href={bookmark.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-blue-600 hover:text-blue-800 truncate block"
+              className="mt-1 block truncate text-sm text-cyan-300 transition group-hover:text-cyan-200"
             >
               {bookmark.url}
             </a>
           </div>
           <button
             onClick={() => deleteBookmark(bookmark.id)}
-            className="ml-4 px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600 transition-colors flex-shrink-0"
+            className="inline-flex shrink-0 items-center justify-center rounded-lg border border-rose-400/40 bg-rose-500/10 px-3 py-1.5 text-sm font-medium text-rose-200 transition hover:bg-rose-500/20"
           >
             Delete
           </button>
